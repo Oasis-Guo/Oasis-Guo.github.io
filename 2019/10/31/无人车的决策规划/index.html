@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="the Architect">
 <meta property="og:description" content="决策和规划 Planning模块的响应速度必须是稳定可靠的（当然，其他模块也是一样）。正常人类的反应速度是300ms，而自动驾驶车辆想要做到安全可靠，其反应时间必须短于100ms。所以，Planning模块通常以10Hz的频率运行着。如果其中某一个算法的时间耗费了太长时间，就可能造成其他模块的处理延迟，最终可能造成严重的后果。例如：没有即时刹车，或者转弯。 - -解析百度Apollo之决策规划模块">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2020-02-26T14:12:13.084Z">
+<meta property="og:updated_time" content="2020-02-26T16:19:34.539Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://oasis-guo.github.io/2019/10/31/%E6%97%A0%E4%BA%BA%E8%BD%A6%E7%9A%84%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92/">
@@ -178,7 +178,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-26 22:12:13" itemprop="dateModified" datetime="2020-02-26T22:12:13+08:00">2020-02-26</time>
+                <time title="Modified: 2020-02-27 00:19:34" itemprop="dateModified" datetime="2020-02-27T00:19:34+08:00">2020-02-27</time>
               </span>
 
           
@@ -195,9 +195,11 @@
         <h2 id="决策和规划"><a href="#决策和规划" class="headerlink" title="决策和规划"></a>决策和规划</h2><blockquote>
 <p>Planning模块的响应速度必须是稳定可靠的（当然，其他模块也是一样）。正常人类的反应速度是300ms，而自动驾驶车辆想要做到安全可靠，其反应时间必须短于100ms。所以，Planning模块通常以10Hz的频率运行着。如果其中某一个算法的时间耗费了太长时间，就可能造成其他模块的处理延迟，最终可能造成严重的后果。例如：没有即时刹车，或者转弯。 - -<a href="https://paul.pub/apollo-planning/" target="_blank" rel="noopener">解析百度Apollo之决策规划模块</a></p>
 </blockquote>
+<a id="more"></a>
+
 <p>对于无人驾驶来说，模块的响应是非常重要的，有人说对于低速的无人驾驶不像高速行驶的无人驾驶一般急切需要这”<strong>10Hz</strong>“的需求，出于在行驶速度上的比较。但是，这样的分析是不对的，因为速度并不是主要的原因。而且速度永远都是相对的。具体场景具体分析。相对于无人驾驶汽车驾驶在结构化的道路，有着一定交通规则的场景来说，低速园区内的无人车面临的是没有结构化的道路，以及更加难以预料的路况，比如：更多能够自由行动的行人，行人的行为很难预测，尤其是小孩子, 有时会封路，或者路演堵路的情况，以及车与车协同的问题等等。为了去面对这些难以预料的情况，我觉得即使对于低速的无人车来说同样是需要这”<strong>10Hz</strong>“的需求，需要一个稳定可靠的<strong>Planning模块</strong>。</p>
 <p>对于这一个稳定可靠的<strong>Planning模块</strong>的含义，个人是这么分析的：</p>
-<a id="more"></a>
+<!-- more -->
 
 <ol>
 <li>数据要低延迟, 安全.</li>
@@ -209,10 +211,10 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">timer_ = nh_.createTimer(ros::Duration(<span class="number">0.1</span>), &amp;motion_planning::timer,<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> motion_planning::run()&#123;</span><br><span class="line">  ros::spin();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>鉴于subcribers的消息队列的大小都为1,这么做的好处是每一次spin拿到的数据都是最新的,也避免能多线程情况下回调函数空转数据没利用上的情况, 而且数据也是能够安全访问, 因为是在单线程运行. 整个运行的情况会是这样的:</p>
-<pre class="mermaid">graph LR
-A[sensor1_callback1] -->B[sensor2_callback2]
-B-->C[sensor*_callback*]
-C-->D[motion_planning::timer]</pre>
+<pre class="mermaid">graph LR;
+A[sensor1_callback1] -->B[sensor2_callback2];
+B-->C[sensor*_callback*];
+C-->D[motion_planning::timer];</pre>
 
 <p>这种模式的话大部分情况都是适用,因为我们算法一般需要的都是拿到最新一帧数据来处理. 不过以上的流程是不确定会不会都是保持这样, 因为不知道spin每次是如何选择调用每个回调函数, 优先级是怎么确定的, 所以有可能谁是这样:</p>
 <pre class="mermaid">graph LR
@@ -483,6 +485,8 @@ C--轨迹-->D[控制]</pre>
   <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
   </div>
 
+
+
         
 
 
@@ -529,6 +533,19 @@ C--轨迹-->D[控制]</pre>
 
 
 
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'default',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
 
 
   
