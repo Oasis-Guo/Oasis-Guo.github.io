@@ -22,16 +22,18 @@
     var CONFIG = {"hostname":"oasis-guo.github.io","root":"/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Love Is Still The Answer">
-<meta property="og:type" content="website">
-<meta property="og:title" content="the Architect">
-<meta property="og:url" content="https:&#x2F;&#x2F;oasis-guo.github.io&#x2F;tags&#x2F;%E6%8A%95%E8%B5%84&#x2F;index.html">
+  <meta name="description" content="读研究生的时候就开始接触了机器学习, 那会室友每次回来都会吐槽自己上的一门课 – 深度学习有多么的变态, 老师布置的作业有多么的难, 当时还不是对深度学习特别感兴趣, 而我也只是一次次地陪笑, 后来慢慢地对深度学习培养了兴趣, 也发现了原来这里面就是本身就有许多 ”控制理论“, ”优化理论“, ”人工智能“ 的东西, 真的是觉得越学越神奇, 越学越觉得很多东西万变不离其宗  — 数学.">
+<meta name="keywords" content="机器学习, 神经网络, 深度学习, 控制理论, 人工智能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度神经网络总结I">
+<meta property="og:url" content="https:&#x2F;&#x2F;oasis-guo.github.io&#x2F;2020&#x2F;04&#x2F;19&#x2F;%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93I&#x2F;index.html">
 <meta property="og:site_name" content="the Architect">
-<meta property="og:description" content="Love Is Still The Answer">
+<meta property="og:description" content="读研究生的时候就开始接触了机器学习, 那会室友每次回来都会吐槽自己上的一门课 – 深度学习有多么的变态, 老师布置的作业有多么的难, 当时还不是对深度学习特别感兴趣, 而我也只是一次次地陪笑, 后来慢慢地对深度学习培养了兴趣, 也发现了原来这里面就是本身就有许多 ”控制理论“, ”优化理论“, ”人工智能“ 的东西, 真的是觉得越学越神奇, 越学越觉得很多东西万变不离其宗  — 数学.">
 <meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2020-04-19T08:04:37.270Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://oasis-guo.github.io/tags/%E6%8A%95%E8%B5%84/">
+<link rel="canonical" href="https://oasis-guo.github.io/2020/04/19/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93I/">
 
 
 <script id="page-configurations">
@@ -39,11 +41,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false
+    isPost: true
   };
 </script>
 
-  <title>Tag: 投资 | the Architect</title>
+  <title>深度神经网络总结I | the Architect</title>
   
 
 
@@ -143,50 +145,104 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h1 class="collection-header">投资
-          <small>Tag</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://oasis-guo.github.io/2020/04/19/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93I/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="Oasis Guo">
+      <meta itemprop="description" content="Love Is Still The Answer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="the Architect">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深度神经网络总结I
         </h1>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-04-19 15:53:46 / Modified: 16:04:37" itemprop="dateCreated datePublished" datetime="2020-04-19T15:53:46+08:00">2020-04-19</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
+        <p>读研究生的时候就开始接触了机器学习, 那会室友每次回来都会吐槽自己上的一门课 – 深度学习有多么的变态, 老师布置的作业有多么的难, 当时还不是对深度学习特别感兴趣, 而我也只是一次次地陪笑, 后来慢慢地对深度学习培养了兴趣, 也发现了原来这里面就是本身就有许多 ”控制理论“, ”优化理论“, ”人工智能“ 的东西, 真的是觉得越学越神奇, 越学越觉得很多东西万变不离其宗  — 数学.</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-31T22:39:42+08:00"
-              content="2019-10-31">
-          10-31
-        </time>
+    
+    
+    
+        <div class="reward-container">
+  <div>欢迎白瞟☟</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Oasis Guo WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Oasis Guo Alipay">
+        <p>Alipay</p>
       </div>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/10/31/%E3%80%8A%E5%AF%8C%E7%88%B8%E7%88%B8%E7%A9%B7%E7%88%B8%E7%88%B8%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F/" itemprop="url">
-            <span itemprop="name">《富爸爸穷爸爸》读后感</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-    </div>
   </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%8E%A7%E5%88%B6%E7%90%86%E8%AE%BA-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 机器学习, 神经网络, 深度学习, 控制理论, 人工智能</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/10/31/%E3%80%8A%E5%AF%8C%E7%88%B8%E7%88%B8%E7%A9%B7%E7%88%B8%E7%88%B8%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F/" rel="prev" title="《富爸爸穷爸爸》读后感">
+      <i class="fa fa-chevron-left"></i> 《富爸爸穷爸爸》读后感
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/19/Apollo5-5%E7%A7%BB%E6%A4%8D%E6%80%BB%E7%BB%93I-Follow-Lane/" rel="next" title="Apollo5.5移植总结I--Follow_Lane">
+      Apollo5.5移植总结I--Follow_Lane <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
   
   
   
 
-  
-
+  </div>
 
 
           </div>
